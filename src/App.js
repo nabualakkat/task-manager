@@ -13,6 +13,7 @@ import PrivateRoute from './components/PrivateRoute'
 import Signup from './components/Signup'
 import Login from './components/Login';
 import TasksPage from './components/Tasks'
+import TaskForm from './components/TaskForm'
 import './App.css';
 
 const App = () => {
@@ -39,6 +40,11 @@ const App = () => {
           isAuth={isAuth} 
           path="/tasks"
           component={TasksPage}/>
+        <PrivateRoute 
+          exact
+          isAuth={isAuth} 
+          path="/add-task"
+          component={TaskForm}/>
       </Switch>
     </Router>
   )
