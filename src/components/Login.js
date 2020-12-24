@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux'
-import { postLogin, authSelector } from '../features/auth/authSlice'
+import { authSelector } from '../features/auth/authSlice'
+import {postLogin} from '../features/auth/asyncActions'
 import '../App.css';
 import { Link } from 'react-router-dom';
 

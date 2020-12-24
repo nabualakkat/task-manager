@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import {fetchTasks, taskSelector} from '../features/task/taskSlice'
 import {authSelector} from '../features/auth/authSlice'
 import '../App.css'
+import Logout from './Logout'
 
 
 const TasksPage = () => {
@@ -26,6 +27,7 @@ const TasksPage = () => {
   return (
     <div>
       <h1>Redux Tasks</h1>
+      <Logout/>
       {renderTasks()}
     </div>
   )

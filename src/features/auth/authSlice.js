@@ -4,12 +4,11 @@ const authSlice = createSlice({
   name:'authSlice',
   initialState: {
     loading: false,
-    isAuth: false,
+    isAuth: window.localStorage.getItem('token') ? true : false,
     user: null,
     errorMessage: null,
   },
   reducers: {
-    //Create User
     createUser: state => {
       state.loading = true
     },
@@ -24,7 +23,6 @@ const authSlice = createSlice({
       state.isAuth = false
       state.loading = false
     },
-    //Login
     login: state => {
       state.loading = true
     },
@@ -39,22 +37,32 @@ const authSlice = createSlice({
       state.isAuth = false
       state.loading = false
     },
-    //Check if Authenticated
     authenticate: state => {
       state.loading = true
     },
     authenticateSuccess: state => {
       state.loading = false
-      state.isAuth = true
     },
     authenticateFailure: state => {
       state.loading = false
-      state.isAuth = false
+    },
+    logout: state => {
+      state.loading = true
+    },
+    logoutSuccess: state => {
+      state.loading = false
+      state.isAuth=false
+      state.user = null
+      state.errorMessage=null
+    },
+    logoutFailure: state => {
+      state.loading = false
+      state.isAuth = true
+      state.errorMessage = 'Unable to logout'
     }
   }
 })
 
-const baseUrl = 'https://alakkat-task-manager.herokuapp.com'
 
 //Selector
 export const authSelector = (state) => state.auth
@@ -68,80 +76,12 @@ export const {
   loginFailure,
   authenticate,
   authenticateSuccess,
-  authenticateFailure
+  authenticateFailure,
+  logout,
+  logoutSuccess,
+  logoutFailure
 } = authSlice.actions
 
 
 export default authSlice.reducer
 
-//Async Signup action
-export function postUser(formData) {
-  return async dispatch => {
-    dispatch(createUser())
-    try{
-      const response = await fetch(`${baseUrl}/users`,{
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-      })
-      const data = await response.json()
-      if (response.status === 201){
-        dispatch(createUserSuccess(data))
-        data.token && localStorage.setItem('token', data.token)
-      }else{
-        throw new Error()
-      }
-    }catch(e){
-      dispatch(createUserFailure('Bad Request'))
-    }
-  }
-}
-
-//Async Login action
-export function postLogin(formData) {
-  return async dispatch => {
-    dispatch(login())
-    try{      
-      const response = await fetch(`${baseUrl}/users/login`,{
-      method: 'POST',
-      headers: {
-          'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(formData)
-    })
-    const data = await response.json()
-    if (response.status === 200){
-      dispatch(loginSuccess(data))
-      data.token && localStorage.setItem('token', data.token)
-    }else{
-      throw new Error()
-    }
-    }catch(e) {
-      dispatch(loginFailure('Login Failed'))
-    }
-  }
-}
-
-//Async Authenticate Action
-export function getAuth(){
-  return async dispatch => {
-    dispatch(authenticate())
-    try{
-      const response = await fetch(`${baseUrl}/users/me`, {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${window.localStorage.getItem('token')}`
-        }
-      })
-      if (response.status === 200) {
-        dispatch(authenticateSuccess())
-      }else{
-        authenticateFailure()
-      }
-    }catch (e) {
-      authenticateFailure()
-    }
-  }
-}
