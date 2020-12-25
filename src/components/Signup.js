@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { authSelector } from '../features/auth/authSlice'
 import {postUser} from '../features/auth/asyncActions'
-import '../App.css';
 import { Link } from 'react-router-dom';
 
 const Signup = () => {

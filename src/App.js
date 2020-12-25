@@ -14,14 +14,14 @@ import Signup from './components/Signup'
 import Login from './components/Login';
 import TasksPage from './components/Tasks'
 import TaskForm from './components/TaskForm'
-import './App.css';
+import SettingsPage from './components/Settings'
 
 const App = () => {
   const dispatch = useDispatch()
   const {isAuth} = useSelector(authSelector)
   useEffect(()=>{
     dispatch(getAuth())
-  },[isAuth])
+  },[dispatch, isAuth])
   return(
     <Router>
       <Switch>
@@ -45,6 +45,11 @@ const App = () => {
           isAuth={isAuth} 
           path="/add-task"
           component={TaskForm}/>
+        <PrivateRoute 
+          exact
+          isAuth={isAuth} 
+          path="/manage-account"
+          component={SettingsPage}/>
       </Switch>
     </Router>
   )

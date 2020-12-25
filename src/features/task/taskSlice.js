@@ -43,6 +43,19 @@ const taskSlice = createSlice({
     updateTaskFailure: state => {
       state.loading = false
       state.errorMessage = 'Unable to edit'
+    },
+    deleteTask: state => {
+      state.loading = true
+    },
+    deleteTaskSuccess: (state, {payload}) => {
+      state.loading = false
+      state.tasks = state.tasks.filter((task) => {
+        return task._id !== payload._id
+      })
+    },
+    deleteTaskFailure: state => {
+      state.loading = false
+      state.errorMessage = 'Unable to delete'
     }
   }
 })
@@ -59,7 +72,10 @@ export const {
   addTaskFailure,
   updateTask,
   updateTaskSuccess,
-  updateTaskFailure
+  updateTaskFailure,
+  deleteTask,
+  deleteTaskSuccess,
+  deleteTaskFailure
 } = taskSlice.actions
 
 export default taskSlice.reducer
@@ -135,6 +151,32 @@ export function editTask(id, formData) {
       }    
     }catch (e) {
       dispatch(updateTaskFailure())
+    }
+  }
+}
+
+//Async Remove Task Action
+export function removeTask(id) {
+  console.log(id)
+  return async dispatch => {
+    dispatch(deleteTask())
+    try{
+      const response = await fetch(`${baseUrl}/tasks/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': token(),
+          'Content-Type': 'application/json'
+        }
+      })
+      const data = await response.json()
+      console.log(data)
+      if (response.status === 200) {
+        dispatch(deleteTaskSuccess(data))
+      }else{
+        throw new Error()
+      }
+    }catch(e) {
+      dispatch(deleteTaskFailure())
     }
   }
 }

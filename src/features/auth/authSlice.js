@@ -40,11 +40,13 @@ const authSlice = createSlice({
     authenticate: state => {
       state.loading = true
     },
-    authenticateSuccess: state => {
+    authenticateSuccess: (state, {payload}) => {
       state.loading = false
+      state.user = {...state.user, user: payload}
     },
     authenticateFailure: state => {
       state.loading = false
+
     },
     logout: state => {
       state.loading = true
@@ -59,6 +61,30 @@ const authSlice = createSlice({
       state.loading = false
       state.isAuth = true
       state.errorMessage = 'Unable to logout'
+    },
+    updateProfile: state => {
+      state.loading = true
+
+    },
+    updateProfileSuccess: (state, {payload}) => {
+      state.loading = false
+      state.user = {...state.user, user: payload}
+    },
+    updateProfileFailure: state => {
+      state.loading = false
+      state.errorMessage = 'Unable to update profile'
+    },
+    deleteAccount: state => {
+      state.loading = true
+    },
+    deleteAccountSuccess: state => {
+      state.loading = false
+      state.isAuth = false
+      state.user = null
+    },
+    deleteAccountFailure: state => {
+      state.loading = false
+      state.errorMessage = 'unable to delete account'
     }
   }
 })
@@ -79,7 +105,13 @@ export const {
   authenticateFailure,
   logout,
   logoutSuccess,
-  logoutFailure
+  logoutFailure,
+  updateProfile,
+  updateProfileSuccess,
+  updateProfileFailure,
+  deleteAccount,
+  deleteAccountSuccess,
+  deleteAccountFailure
 } = authSlice.actions
 
 

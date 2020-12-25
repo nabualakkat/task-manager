@@ -3,7 +3,6 @@ import {Link} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
 import {fetchTasks, editTask, taskSelector} from '../features/task/taskSlice'
 import {authSelector} from '../features/auth/authSlice'
-import '../App.css'
 import Logout from './Logout'
 import Task from './Task'
 
@@ -27,6 +26,7 @@ const TasksPage = () => {
     <div>
       <h1>Redux Tasks</h1>
       <Link to="/add-task">+</Link>
+      <Link to="/manage-account">Manage Account</Link>
       <Logout/>
       {renderTasks()}
     </div>
