@@ -1,8 +1,10 @@
 
-import React, {useState, useEffect} from 'react'
-import {useDispatch, useSelector} from 'react-redux'
-import { Redirect } from 'react-router-dom'
-import {taskSelector, postTask} from '../features/task/taskSlice'
+import React, {useState} from 'react'
+import {useDispatch} from 'react-redux'
+import {Modal, FormGroup, FormControl,  FormCheck, Button} from 'react-bootstrap'
+import {postTask} from '../features/task/taskSlice'
+import Layout from './Layout'
+import '../App.css'
 
 const TaskForm = (props) => {
   const [description, setDescription] = useState('')
@@ -16,14 +18,18 @@ const TaskForm = (props) => {
     props.history.push('/tasks') 
   }
   return(
-    <div>
-      <form onSubmit={onSubmit}>
-        <input type="text" placeholder="Task" value={description} onChange={onDescriptionChange}/>
-        <input type="checkbox" id="completed" name="completed" value={completed} onChange={onCompletedChange}/>
-        <label for="completed"> Completed? </label>
-        <button type="submit" onClick={() => dispatch(postTask({description, completed}))}>Add Task</button>
-      </form>
-    </div>
+    <Layout>
+      <Modal show={props.show} onHide={props.onHide}>
+        <Modal.Header closeButton>
+          <Modal.Title>New Task</Modal.Title>
+        </Modal.Header>
+        <FormGroup className="task-form" onSubmit={onSubmit}>
+          <FormControl className="task-form-child" type="text" placeholder="Task" value={description} onChange={onDescriptionChange}/>
+          <FormCheck className="task-form-child"  label="Complete" type="checkbox" id="completed" name="completed" value={completed} onChange={onCompletedChange}/>
+          <Button className="task-form-child"  size="lg" type="submit" onClick={() => dispatch(postTask({description, completed}))}>Add Task</Button>
+        </FormGroup>
+      </Modal>
+    </Layout>
   )
 }
 

@@ -15,6 +15,7 @@ import Login from './components/Login';
 import TasksPage from './components/Tasks'
 import TaskForm from './components/TaskForm'
 import SettingsPage from './components/Settings'
+import Layout from './components/Layout'
 
 const App = () => {
   const dispatch = useDispatch()
@@ -23,35 +24,39 @@ const App = () => {
     dispatch(getAuth())
   },[dispatch, isAuth])
   return(
-    <Router>
-      <Switch>
-        <PublicRoute 
-          exact
-          isAuth={isAuth} 
-          path="/"
-          component={Login}/>
-        <PublicRoute 
-          exact
-          isAuth={isAuth} 
-          path="/signup"
-          component={Signup}/>
-        <PrivateRoute 
-          exact
-          isAuth={isAuth} 
-          path="/tasks"
-          component={TasksPage}/>
-        <PrivateRoute 
-          exact
-          isAuth={isAuth} 
-          path="/add-task"
-          component={TaskForm}/>
-        <PrivateRoute 
-          exact
-          isAuth={isAuth} 
-          path="/manage-account"
-          component={SettingsPage}/>
-      </Switch>
-    </Router>
+  <>
+
+      <Router>
+        <Switch>
+          <PublicRoute 
+            exact
+            isAuth={isAuth} 
+            path="/"
+            component={Login}/>
+          <PublicRoute 
+            exact
+            isAuth={isAuth} 
+            path="/signup"
+            component={Signup}/>
+          <PrivateRoute 
+            exact
+            isAuth={isAuth} 
+            path="/tasks"
+            component={TasksPage}/>
+          <PrivateRoute 
+            exact
+            isAuth={isAuth} 
+            path="/add-task"
+            component={TaskForm}/>
+          <PrivateRoute 
+            exact
+            isAuth={isAuth} 
+            path="/manage-account"
+            component={SettingsPage}/>
+        </Switch>
+      </Router>
+
+  </>
   )
 }
 

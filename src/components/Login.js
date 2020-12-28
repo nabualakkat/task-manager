@@ -1,40 +1,66 @@
 import React, {useState} from 'react';
-import { useDispatch, useSelector } from 'react-redux'
-import { authSelector } from '../features/auth/authSlice'
+import { useDispatch} from 'react-redux'
+import {FormGroup, FormControl, Button} from 'react-bootstrap'
 import {postLogin} from '../features/auth/asyncActions'
 import { Link } from 'react-router-dom';
+import validator from 'validator'
+import '../App.css'
+import Feedback from 'react-bootstrap/esm/Feedback';
+import Layout from './Layout'
 
 
 const Login = () => {
+  //Hooks
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [errors, setErrors] = useState([])
   const dispatch = useDispatch()
-  const {loading, isAuth, errorMessage, user } = useSelector(authSelector)
-
-
+  //Handlers
   const onEmailChange = (e) => setEmail(e.target.value)
   const onPasswordChange = (e) => setPassword(e.target.value)
+  const hasError = (key) => errors.indexOf(key) !== -1
   const onSubmit = (e) => {
     e.preventDefault()
+    let errors = []
+    if (!validator.isEmail(email)) {
+      errors.push("email")
+    }
+    if (password.length < 7 || password.toLowerCase().includes('password')) {
+      errors.push("password")
+    }
+    setErrors(errors)
+    if (errors.length === 0){
+      dispatch(postLogin({
+        email, 
+        password 
+      }))
+    }  
   }
   return (
+    <Layout>
     <div className="form-signin">
-      <h1 className="h3 mb-3 fw-normal">Redux App</h1>
-      <form onSubmit={onSubmit}>
-        <input className="form-control" type="email" value={email} onChange={onEmailChange} placeholder="Email"/>
-        <input className="form-control" type="password" value={password} onChange={onPasswordChange} placeholder="Password"/>
-        
-        <button
-          className="form-control" 
-          onClick={()=>dispatch(postLogin({
-              email, 
-              password 
-          }))}>
+      <FormGroup onSubmit={onSubmit}>
+        <h1>Task Manager</h1>
+        <FormControl className={hasError('email') ? "form-control is-invalid" : "form-control"} type="email" value={email} onChange={onEmailChange} placeholder="Email"/>
+        <Feedback type="invalid" className={hasError('email') ? "inline-errormsg" : "hidden"}>
+          Invalid Email
+        </Feedback>
+        <FormControl className={hasError('password') ? "form-control is-invalid" : "form-control"} type="password" value={password} onChange={onPasswordChange} placeholder="Password"/>
+        <Feedback type="invalid" className={hasError('password') ? "inline-errormsg" : "hidden"}>
+          Password must be at least 7 characters and not include the word 'password'
+        </Feedback>
+        <Button
+          className="submit-button" 
+          onClick={onSubmit}
+          variant="primary"
+          size="lg"
+          block>
           Login
-        </button>
-      </form>
-      <Link to="/signup">Sign up</Link>
+        </Button>
+      </FormGroup>
+      <Link className="link" to="/signup">Sign up</Link>
     </div>
+    </Layout>
   );
 }
 

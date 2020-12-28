@@ -1,12 +1,17 @@
 import {createSlice} from '@reduxjs/toolkit'
 import { token, baseUrl } from '../index'
+import {useSelector} from 'react-redux'
 
 const taskSlice = createSlice({
   name: 'taskSlice',
   initialState: {
     loading: false,
     tasks: [],
-    errorMessage: null
+    errorMessage: null,
+    limit: 4,
+    skip: 0,
+    sortBy: 'completed:desc',
+    showIncomplete: ''
   },
   reducers: {
     getTasks: state => {
@@ -56,6 +61,15 @@ const taskSlice = createSlice({
     deleteTaskFailure: state => {
       state.loading = false
       state.errorMessage = 'Unable to delete'
+    },
+    changeSortBy: (state, {payload}) => {
+      state.sortBy = payload
+    },
+    changeShow: (state, {payload}) => {
+      state.showIncomplete = payload
+    },
+    loadMore: (state, {payload}) => {
+      state.skip = state.skip + payload
     }
   }
 })
@@ -75,18 +89,22 @@ export const {
   updateTaskFailure,
   deleteTask,
   deleteTaskSuccess,
-  deleteTaskFailure
+  deleteTaskFailure,
+  changeSortBy,
+  changeShow,
+  loadMore
 } = taskSlice.actions
 
 export default taskSlice.reducer
 
 //Async Get Tasks action
 
-export function fetchTasks() {
+export function fetchTasks(showIncomplete, sortBy, limit, skip) {
+  const url = `${baseUrl}/tasks?${showIncomplete === 'incomplete' && 'completed=false'}${sortBy === 'createdAt:desc' ? '&sortBy=createdAt:desc' : '&sortBy=completed:asc'}&limit=${limit}&skip=${skip}`
   return async dispatch => {
     dispatch(getTasks())
     try{ 
-      const response = await fetch(`${baseUrl}/tasks`, {
+      const response = await fetch(url, {
         method: 'GET',
         headers: {
           'Authorization': token(),

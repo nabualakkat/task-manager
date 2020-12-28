@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {editProfile, removeAccount} from '../features/auth/asyncActions'
 import {authSelector} from '../features/auth/authSlice'
+import Layout from './Layout'
 
 
 const SettingsPage = (props) => {
@@ -23,6 +24,7 @@ const SettingsPage = (props) => {
     props.history.push('/')
   }
   return(
+    <Layout>
     <div>
       <form onSubmit={onSubmit}>
         <input type="text" placeholder="Name" value={name} onChange={onNameChange}/>
@@ -34,6 +36,7 @@ const SettingsPage = (props) => {
         <button onClick={() => dispatch(removeAccount())}>Delete Account</button>
       </form>          
     </div>
+    </Layout>
   )
 }
 
