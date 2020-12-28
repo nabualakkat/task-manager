@@ -10,6 +10,7 @@ const taskSlice = createSlice({
     errorMessage: null,
     limit: 4,
     skip: 0,
+    totalPages: 1,
     sortBy: 'completed:desc',
     showIncomplete: ''
   },
@@ -69,7 +70,10 @@ const taskSlice = createSlice({
       state.showIncomplete = payload
     },
     loadMore: (state, {payload}) => {
-      state.skip = state.skip + payload
+      state.skip = (payload-1)*state.limit
+    },
+    changePages: (state, {payload}) => {
+      state.totalPages = state.limit > payload ? 1 : Math.ceil(payload/state.limit)
     }
   }
 })
@@ -92,7 +96,8 @@ export const {
   deleteTaskFailure,
   changeSortBy,
   changeShow,
-  loadMore
+  loadMore,
+  changePages
 } = taskSlice.actions
 
 export default taskSlice.reducer
@@ -103,7 +108,20 @@ export function fetchTasks(showIncomplete, sortBy, limit, skip) {
   const url = `${baseUrl}/tasks?${showIncomplete === 'incomplete' && 'completed=false'}${sortBy === 'createdAt:desc' ? '&sortBy=createdAt:desc' : '&sortBy=completed:asc'}&limit=${limit}&skip=${skip}`
   return async dispatch => {
     dispatch(getTasks())
-    try{ 
+    try{
+      const res = await fetch(`${baseUrl}/tasks/count`, {
+        method: 'GET',
+        headers: {
+          'Authorization': token(),
+          'Content-Type': 'application/json'
+        }
+      })
+      const pages = await res.json()
+      if(res.status === 200){
+        dispatch(changePages(pages.count))
+      }else{
+        throw new Error()
+      }
       const response = await fetch(url, {
         method: 'GET',
         headers: {

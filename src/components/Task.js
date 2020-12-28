@@ -7,10 +7,10 @@ import '../App.css'
 const Task = (props) => {
 
   const dispatch = useDispatch()
-  const {showIncomplete, sortBy, limit, skip} = useSelector(taskSelector)
+  const {showIncomplete, sortBy, limit, skip, tasks} = useSelector(taskSelector)
   useEffect(()=>{
     dispatch(fetchTasks(showIncomplete, sortBy, limit, skip))
-  },[dispatch, props.completed])
+  },[dispatch, props.completed, tasks])
 
   return(
     <Card className="task-card-layout" style={{ width: '100%' }}>

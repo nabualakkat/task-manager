@@ -1,24 +1,35 @@
 import React, {useEffect, useState} from 'react'
 import {Link} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
-import {Button, Nav, Navbar, Form, Container, Row, Col} from 'react-bootstrap'
+import {Button, Nav, Navbar, Form, Pagination, Container, Row, Col} from 'react-bootstrap'
 import {fetchTasks, taskSelector, changeSortBy, changeShow, loadMore} from '../features/task/taskSlice'
 import {authSelector} from '../features/auth/authSlice'
 import Layout from './Layout'
 import Logout from './Logout'
 import Task from './Task'
 import TaskForm from './TaskForm'
+import '../App.css'
 
 
 const TasksPage = () => {
   const [show, setShow] = useState(false)
   const dispatch = useDispatch()
   const {isAuth} = useSelector(authSelector)
-  const {loading, tasks, showIncomplete, sortBy, limit, skip, errorMessage,} = useSelector(taskSelector)
+  const {loading, tasks, showIncomplete, sortBy, limit, skip, totalPages, errorMessage,} = useSelector(taskSelector)
   useEffect(()=>{
     dispatch(fetchTasks(showIncomplete, sortBy, limit, skip))
   },[dispatch, showIncomplete, sortBy, limit, skip])
-  
+  const renderPagination = () => {
+    let items = []
+    for(let number = 1; number <= totalPages; number ++) {
+      items.push(
+        <Pagination.Item onClick={() => dispatch(loadMore(number))} key={number}>
+          {number}
+        </Pagination.Item>
+      )
+    }
+    return items
+  }
   const renderTasks = () => {
 
     return tasks.map((task) => 
@@ -57,7 +68,8 @@ const TasksPage = () => {
       </Navbar>
       <TaskForm show={show} onHide={handleClose}/>
       {renderTasks()}
-      <button onClick={()=> dispatch(loadMore(limit))}>Load More</button>
+      <Pagination>{renderPagination()}</Pagination>
+      
       </Layout>
     </div>
   )
