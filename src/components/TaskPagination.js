@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react'
 import {shallowEqual, useDispatch, useSelector} from 'react-redux'
-import {changePages, fetchTasks, loadMore, taskSelector} from '../features/task/taskSlice'
+import {loadMore, taskSelector} from '../features/task/taskSlice'
+import {fetchTasks} from '../features/task/asyncActions'
 import {Pagination} from 'react-bootstrap'
 import '../App.css'
 

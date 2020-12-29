@@ -1,8 +1,8 @@
 
 import React, {useState} from 'react'
 import {useDispatch} from 'react-redux'
-import {Modal, FormGroup, FormControl,  FormCheck, Button} from 'react-bootstrap'
-import {postTask} from '../features/task/taskSlice'
+import {Modal, FormGroup, FormControl, Button} from 'react-bootstrap'
+import {postTask} from '../features/task/asyncActions'
 import Layout from './Layout'
 import '../App.css'
 

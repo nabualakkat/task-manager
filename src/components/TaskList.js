@@ -1,7 +1,6 @@
-import { createSelector } from '@reduxjs/toolkit'
 import React from 'react'
 import {useSelector, useDispatch} from 'react-redux'
-import {taskSelector, changePages} from '../features/task/taskSlice'
+import {taskSelector} from '../features/task/taskSlice'
 
 import Task from './Task'
 

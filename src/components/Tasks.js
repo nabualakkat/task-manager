@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react'
 import {Link} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
-import {Button, Nav, Navbar, Form, Pagination, Container, Row, Col} from 'react-bootstrap'
+import {Button, Navbar, Form, Pagination} from 'react-bootstrap'
 import moment from 'moment'
-import {fetchTasks, taskSelector, changeSortBy, changeShow, loadMore} from '../features/task/taskSlice'
-import {authSelector} from '../features/auth/authSlice'
+import {taskSelector, changeSortBy, changeShow} from '../features/task/taskSlice'
+import {fetchTasks} from '../features/task/asyncActions'
 import Layout from './Layout'
 import Logout from './Logout'
 import Task from './Task'
@@ -16,8 +16,7 @@ import '../App.css'
 const TasksPage = () => {
   const [show, setShow] = useState(false)
   const dispatch = useDispatch()
-  const {isAuth} = useSelector(authSelector)
-  const {loading, tasks, showIncomplete, sortBy, limit, skip, totalPages, errorMessage,} = useSelector(taskSelector)
+  const {tasks, showIncomplete, sortBy, limit, skip} = useSelector(taskSelector)
   useEffect(()=>{
     dispatch(fetchTasks(showIncomplete, sortBy, limit, skip))
   },[dispatch, showIncomplete, sortBy, limit, skip])
