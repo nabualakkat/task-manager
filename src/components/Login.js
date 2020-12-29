@@ -40,13 +40,13 @@ const Login = () => {
     <Layout>
     <div className="form-signin">
       <FormGroup onSubmit={onSubmit}>
-        <h1>Task Manager</h1>
+        <h1 className="public-header">Task Manager</h1>
         <FormControl className={hasError('email') ? "form-control is-invalid" : "form-control"} type="email" value={email} onChange={onEmailChange} placeholder="Email"/>
-        <Feedback type="invalid" className={hasError('email') ? "inline-errormsg" : "hidden"}>
+        <Feedback className={hasError('email') ? "invalid-feedback" : "hidden"}>
           Invalid Email
         </Feedback>
         <FormControl className={hasError('password') ? "form-control is-invalid" : "form-control"} type="password" value={password} onChange={onPasswordChange} placeholder="Password"/>
-        <Feedback type="invalid" className={hasError('password') ? "inline-errormsg" : "hidden"}>
+        <Feedback className={hasError('password') ? "invalid-feedback" : "hidden"}>
           Password must be at least 7 characters and not include the word 'password'
         </Feedback>
         <Button

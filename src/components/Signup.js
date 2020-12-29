@@ -43,7 +43,7 @@ const Signup = () => {
   return (
     <Layout>
     <div className="form-signin">
-      <h1>Task Manager</h1>
+      <h1 className="public-header">Task Manager</h1>
       <FormGroup onSubmit={onSubmit}>
         <FormControl className={hasError('name') ? "form-control is-invalid" : "form-control"} type="text" value={name} onChange={onNameChange} placeholder="Name"/>
         <Feedback type="invalid" className={hasError('email') ? "inline-errormsg" : "hidden"}>
