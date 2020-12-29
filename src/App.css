@@ -140,7 +140,14 @@ body {
   margin: 10px 0;
   height: 80px;
   color: #1f2833;
-
+}
+.task-card-text-container{
+  padding: 10px;
+}
+.h6,
+h6{
+  font-size: .75rem;
+  font-style: italic;
 }
 .task-card-right{
   display: flex;

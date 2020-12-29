@@ -1,6 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit'
 import { token, baseUrl } from '../index'
 import {useSelector} from 'react-redux'
+import {createSelector} from 'reselect'
 
 const taskSlice = createSlice({
   name: 'taskSlice',
@@ -8,8 +9,9 @@ const taskSlice = createSlice({
     loading: false,
     tasks: [],
     errorMessage: null,
-    limit: 4,
+    limit: 10,
     skip: 0,
+    totalTasks: 1,
     totalPages: 1,
     sortBy: 'completed:desc',
     showIncomplete: ''
@@ -72,8 +74,15 @@ const taskSlice = createSlice({
     loadMore: (state, {payload}) => {
       state.skip = (payload-1)*state.limit
     },
-    changePages: (state, {payload}) => {
-      state.totalPages = state.limit > payload ? 1 : Math.ceil(payload/state.limit)
+    getTotalTasks: state => state.loading = true,
+
+    getTotalTasksSuccess: (state, {payload}) => {
+      state.loading = false
+      state.totalTasks = payload
+    },
+    getTotalTasksFailure: state => state.errorMessage = 'unable to fetch data',
+    changePages: (state) => {
+      state.totalPages = state.limit > state.totalTasks ? 1 : Math.ceil(state.totalTasks/state.limit)
     }
   }
 })
@@ -97,12 +106,39 @@ export const {
   changeSortBy,
   changeShow,
   loadMore,
-  changePages
+  changePages,
+  getTotalTasks,
+  getTotalTasksSuccess,
+  getTotalTasksFailure
 } = taskSlice.actions
 
 export default taskSlice.reducer
 
 //Async Get Tasks action
+
+export function getCount() {
+  return async dispatch => {
+    dispatch(getTotalTasks())
+    try{
+        const res = await fetch(`${baseUrl}/tasks/count`, {
+          method: 'GET',
+          headers: {
+            'Authorization': token(),
+            'Content-Type': 'application/json'
+          }
+        })
+        const pages = await res.json()
+        if(res.status === 200){
+          dispatch(getTotalTasksSuccess(pages.count))
+        }else{
+          throw new Error()
+        } 
+    }catch(e) {
+      dispatch(getTotalTasksFailure())
+    }
+  }
+}
+
 
 export function fetchTasks(showIncomplete, sortBy, limit, skip) {
   const url = `${baseUrl}/tasks?${showIncomplete === 'incomplete' && 'completed=false'}${sortBy === 'createdAt:desc' ? '&sortBy=createdAt:desc' : '&sortBy=completed:asc'}&limit=${limit}&skip=${skip}`
@@ -118,7 +154,7 @@ export function fetchTasks(showIncomplete, sortBy, limit, skip) {
       })
       const pages = await res.json()
       if(res.status === 200){
-        dispatch(changePages(pages.count))
+        dispatch(getTotalTasksSuccess(pages.count))
       }else{
         throw new Error()
       }
@@ -157,6 +193,7 @@ export function postTask(formData) {
       const data = await response.json()
       if (response.status === 201) {
         dispatch(addTaskSuccess(data))
+
       }else{
         throw new Error()
       }
@@ -182,6 +219,7 @@ export function editTask(id, formData) {
       const data = await response.json()
       if (response.status === 200){
         dispatch(updateTaskSuccess(data))
+
       }else{
         throw new Error()
       }    
@@ -193,7 +231,6 @@ export function editTask(id, formData) {
 
 //Async Remove Task Action
 export function removeTask(id) {
-  console.log(id)
   return async dispatch => {
     dispatch(deleteTask())
     try{
@@ -205,7 +242,6 @@ export function removeTask(id) {
         }
       })
       const data = await response.json()
-      console.log(data)
       if (response.status === 200) {
         dispatch(deleteTaskSuccess(data))
       }else{

@@ -8,6 +8,7 @@ import Layout from './Layout'
 import Logout from './Logout'
 import Task from './Task'
 import TaskForm from './TaskForm'
+import Pages from './TaskPagination'
 import '../App.css'
 
 
@@ -19,17 +20,6 @@ const TasksPage = () => {
   useEffect(()=>{
     dispatch(fetchTasks(showIncomplete, sortBy, limit, skip))
   },[dispatch, showIncomplete, sortBy, limit, skip])
-  const renderPagination = () => {
-    let items = []
-    for(let number = 1; number <= totalPages; number ++) {
-      items.push(
-        <Pagination.Item onClick={() => dispatch(loadMore(number))} key={number}>
-          {number}
-        </Pagination.Item>
-      )
-    }
-    return items
-  }
   const renderTasks = () => {
 
     return tasks.map((task) => 
@@ -68,7 +58,9 @@ const TasksPage = () => {
       </Navbar>
       <TaskForm show={show} onHide={handleClose}/>
       {renderTasks()}
-      <Pagination>{renderPagination()}</Pagination>
+      <Pagination>
+        <Pages/>
+      </Pagination>
       
       </Layout>
     </div>
