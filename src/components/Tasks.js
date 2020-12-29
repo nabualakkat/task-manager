@@ -7,6 +7,7 @@ import {taskSelector, changeSortBy, changeShow} from '../features/task/taskSlice
 import {fetchTasks} from '../features/task/asyncActions'
 import Layout from './Layout'
 import Logout from './Logout'
+import TaskList from './TaskList'
 import Task from './Task'
 import TaskForm from './TaskForm'
 import Pages from './TaskPagination'
@@ -20,18 +21,7 @@ const TasksPage = () => {
   useEffect(()=>{
     dispatch(fetchTasks(showIncomplete, sortBy, limit, skip))
   },[dispatch, showIncomplete, sortBy, limit, skip])
-  const renderTasks = () => {
 
-    return tasks.map((task) => 
-      <Task 
-        key={task._id} 
-        _id={task._id}
-        createdAt= {moment(task.createdAt).format("MMM Do, YYYY - h:mm a")  } 
-        description={task.description} 
-        completed={task.completed} 
-      />
-    )
-  }
 
   const handleShowIncompletedChange = (e) =>
   e.target.checked ? dispatch(changeShow('incomplete')) : dispatch(changeShow('')) 
@@ -58,7 +48,7 @@ const TasksPage = () => {
         <Button className="add-task-button" onClick={handleShow}>+</Button>
       </Navbar>
       <TaskForm show={show} onHide={handleClose}/>
-      {renderTasks()}
+        <TaskList/>
       <Pagination>
         <Pages/>
       </Pagination>

@@ -1,15 +1,14 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
+import moment from 'moment'
 import {taskSelector} from '../features/task/taskSlice'
+import {fetchTasks} from '../features/task/asyncActions'
 
 import Task from './Task'
 
 const TaskList = () => {
   const dispatch=useDispatch()
   const {showIncomplete, sortBy, limit, skip, tasks, totalTasks} = useSelector(taskSelector)
-  tasks.forEach((task) => {
-    console.log(task)
-  })
   useEffect(()=> {
     dispatch(fetchTasks(showIncomplete, sortBy, limit, skip))
   },[dispatch, showIncomplete, sortBy, limit, skip, totalTasks])
@@ -17,7 +16,7 @@ const TaskList = () => {
     <Task 
       key={task._id} 
       _id={task._id}
-      createdAt={task.createdAt} 
+      createdAt= {moment(task.createdAt).format("MMM Do, YYYY - h:mm a")  } 
       description={task.description} 
       completed={task.completed} 
     />
