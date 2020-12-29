@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react'
 import {Link} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
 import {Button, Nav, Navbar, Form, Pagination, Container, Row, Col} from 'react-bootstrap'
+import moment from 'moment'
 import {fetchTasks, taskSelector, changeSortBy, changeShow, loadMore} from '../features/task/taskSlice'
 import {authSelector} from '../features/auth/authSlice'
 import Layout from './Layout'
@@ -25,7 +26,8 @@ const TasksPage = () => {
     return tasks.map((task) => 
       <Task 
         key={task._id} 
-        _id={task._id} 
+        _id={task._id}
+        createdAt= {moment(task.createdAt).format("MMM Do, YYYY - h:mm a")  } 
         description={task.description} 
         completed={task.completed} 
       />
@@ -51,10 +53,10 @@ const TasksPage = () => {
       <Layout>
       <Navbar className="task-nav">
         <div>
-          <Form.Check label="Show Incomplete" name="show-incomplete" type="checkbox" onChange={handleShowIncompletedChange}/>
+          <Form.Check label="Hide Complete" name="hide-complete" type="checkbox" onChange={handleShowIncompletedChange}/>
           <Form.Check label="Sort by Date" name="sortBy" type="checkbox" onChange={handleSortByChange}/>
         </div>
-        <Button variant="secondary" onClick={handleShow}>+</Button>
+        <Button className="add-task-button" onClick={handleShow}>+</Button>
       </Navbar>
       <TaskForm show={show} onHide={handleClose}/>
       {renderTasks()}

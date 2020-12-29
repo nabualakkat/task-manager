@@ -20,10 +20,15 @@ const Task = (props) => {
     <Card className="task-card-layout" style={{ width: '100%' }}>
       <div className="task-card-text-container">
         <Card.Title>{props.description}</Card.Title>
-        <Card.Subtitle>{props.completed ? 'complete' : 'incomplete'}</Card.Subtitle>
+        
+        <Card.Subtitle>{props.createdAt}</Card.Subtitle>
       </div>
       <div className="task-card-right">
-        <input className="task-card-checkbox" type="checkbox" checked={props.completed} onChange={() => dispatch(editTask(props._id, {completed: props.completed ? false : true}))}/>
+        <Card.Text>{props.completed ? 'complete' : 'incomplete'}</Card.Text>
+        <label className="switch">
+          <input className="task-card-checkbox" type="checkbox" checked={props.completed} onChange={() => dispatch(editTask(props._id, {completed: props.completed ? false : true}))}/>
+          <span className="slider round"></span>
+        </label>
         <Button className="delete-button" size="lg" onClick={onRemoveHandler}>
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash" viewBox="0 0 16 16">
             <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>

@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
+import {Form, Button} from 'react-bootstrap'
 import {editProfile, removeAccount} from '../features/auth/asyncActions'
 import {authSelector} from '../features/auth/authSlice'
 import Layout from './Layout'
@@ -25,16 +26,17 @@ const SettingsPage = (props) => {
   }
   return(
     <Layout>
-    <div>
-      <form onSubmit={onSubmit}>
-        <input type="text" placeholder="Name" value={name} onChange={onNameChange}/>
-        <input type="email" placeholder="Email" value={email} onChange={onEmailChange}/>
-        <input type="password" placeholder="Password" value={password} onChange={onPasswordChange}/>
-        <button onClick={() => dispatch(editProfile({name, email, password}))}>Update Profile</button>
-      </form>
-      <form onSubmit={onDelete}>
-        <button onClick={() => dispatch(removeAccount())}>Delete Account</button>
-      </form>          
+    <div className="form-signin">
+      <h1 className="public-header">Manage Account</h1>
+      <Form onSubmit={onSubmit}>
+        <Form.Control type="text" placeholder="Name" value={name} onChange={onNameChange}/>
+        <Form.Control type="email" placeholder="Email" value={email} onChange={onEmailChange}/>
+        <Form.Control type="password" placeholder="Password" value={password} onChange={onPasswordChange}/>
+        <Button className="submit-button" onClick={() => dispatch(editProfile({name, email, password}))}>Update Profile</Button>
+      </Form>
+      <Form onSubmit={onDelete}>
+        <Button className="submit-button" onClick={() => dispatch(removeAccount())}>Delete Account</Button>
+      </Form>          
     </div>
     </Layout>
   )

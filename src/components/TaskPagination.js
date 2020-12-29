@@ -7,7 +7,7 @@ import '../App.css'
 const Pages = () => {
   const dispatch = useDispatch()
   const {showIncomplete,sortBy, skip, totalTasks, limit} = useSelector(taskSelector, shallowEqual)
-  const totalPages = limit > totalTasks ? 1 : Math.ceil(totalTasks/limit)
+  const totalPages = limit >= totalTasks ? 0 : Math.ceil(totalTasks/limit)
   useEffect(()=> {
     dispatch(fetchTasks(showIncomplete, sortBy, limit, skip))
   },[dispatch, limit, skip])

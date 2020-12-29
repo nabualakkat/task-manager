@@ -21,13 +21,17 @@ body {
   margin: 71px auto;
   padding: 30px 15px;
   text-align: center;
-  background-color: #607D8B;
   border-radius: 5px;
+}
+
+.form-signin{
+  background-color: #607D8B;
 }
 
 .public-header{
   color: #fff;
   margin-bottom: 40px;
+  font-size: 200%;
 }
 
 .task-form{
@@ -109,6 +113,7 @@ body {
 }
 .manage-account-button{
   margin: 0 20px;
+  color: #fff;
 }
 
 .main-nav{
@@ -130,6 +135,17 @@ body {
   color: #212121;
 }
 
+.add-task-button{
+  background-color: #607D8B;
+  border-color: #fff;
+  color: #fff;
+}
+.add-task-button:hover{
+  background-color: #455A64;
+  border-color: #FF9800;
+  color: #FF9800;
+}
+
 
 
 /*TASK CARDS*/
@@ -138,8 +154,10 @@ body {
   flex-direction: row;
   justify-content: space-between;
   margin: 10px 0;
-  height: 80px;
-  color: #1f2833;
+  height: 100px;
+  color: #212121;
+  background-color: #8fa6b1;
+
 }
 .task-card-text-container{
   padding: 10px;
@@ -148,7 +166,21 @@ body {
 h6{
   font-size: .75rem;
   font-style: italic;
+  color: #212121;
 }
+.card-title{
+  margin-top: 10px;
+}
+.card-subtitle{
+  padding: 5px 0;
+  margin-top: 10px;
+}
+
+.card-text{
+  color:#212121;
+  margin: auto 0;
+}
+
 .task-card-right{
   display: flex;
   flex-direction: row;
@@ -159,15 +191,15 @@ h6{
 }
 
 .delete-button{
-  background-color: #607D8B;
-  border-color: #fff;
+  background-color: #8fa6b1;
+  border-color: #8fa6b1;
   width: 80px;
 }
 
 
 
 .delete-button:hover{
-  background-color: #455A64;
+  background-color: #607D8B;
   border-color: #FF9800;
   color: #FF9800;
 }
@@ -196,3 +228,73 @@ h6{
   border-color: #FF9800;
 }
 
+/*CHECKBOX SLIDER*/
+
+/* The switch - the box around the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  margin: auto 10px;
+  width: 50px;
+  height: 23px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #CFD8DC;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 15px;
+  width: 15px;
+  left: 4px;
+  bottom: 4px;
+  background-color: #455A64;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #FF9800;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #FF9800;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+/*MODAL*/
+.modal-content{
+  background-color: #CFD8DC;
+}
