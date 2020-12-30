@@ -55,7 +55,7 @@ const Signup = () => {
         </Feedback>
         <FormControl className={hasError('password') ? "form-control is-invalid" : "form-control"} type="password" value={password} onChange={onPasswordChange} placeholder="Password"/>
         <Feedback className={hasError('password') ? "invalid-feedback" : "hidden"}>
-          Password must be at least 6 characters and cannot include "password"
+          {password.toLowerCase().includes('password') ? "Cannot include the word 'password'" : "Password must be at least 7 characters"}
         </Feedback>
         <Button 
         className="submit-button"
