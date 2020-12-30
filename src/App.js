@@ -15,7 +15,7 @@ import Login from './components/Login';
 import TasksPage from './components/Tasks'
 import TaskForm from './components/TaskForm'
 import SettingsPage from './components/Settings'
-import Layout from './components/Layout'
+import NotFoundPage from './components/NotFoundPage'
 
 const App = () => {
   const dispatch = useDispatch()
@@ -53,6 +53,7 @@ const App = () => {
             isAuth={isAuth} 
             path="/manage-account"
             component={SettingsPage}/>
+          <Route path="*" component={NotFoundPage}/>
         </Switch>
       </Router>
 

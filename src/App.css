@@ -12,8 +12,6 @@ body {
 
 /*FORMS*/
 
- 
-
 .form-signin,
 .task-form {
   width: 100%;
@@ -145,6 +143,12 @@ body {
   border-color: #FF9800;
   color: #FF9800;
 }
+.filters{
+  display: flex;
+}
+.filter{
+  display: flex;
+}
 
 
 
@@ -211,6 +215,12 @@ h6{
   color: #FF9800;
 }
 
+.no-tasks{
+  text-align: center;
+  color: #455A64;
+  padding: 20px;
+}
+
 /*PAGINATION*/
 
 .pagination{
@@ -237,6 +247,7 @@ h6{
   margin: auto 10px;
   width: 50px;
   height: 23px;
+
 }
 
 /* Hide default HTML checkbox */
@@ -254,9 +265,10 @@ h6{
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #CFD8DC;
+  background-color: #607D8B;
   -webkit-transition: .4s;
   transition: .4s;
+
 }
 
 .slider:before {
@@ -266,7 +278,7 @@ h6{
   width: 15px;
   left: 4px;
   bottom: 4px;
-  background-color: #455A64;
+  background-color: #CFD8DC;
   -webkit-transition: .4s;
   transition: .4s;
 }
@@ -297,4 +309,55 @@ input:checked + .slider:before {
 /*MODAL*/
 .modal-content{
   background-color: #CFD8DC;
+}
+
+/*NOT FOUND PAGE*/
+.col-md-12{
+  margin-top: 30vh;
+}
+
+.btn.btn-link{
+  color: #FF9800;
+  text-decoration: none;
+}
+
+@media (max-width: 575.98px) {
+  /*TASK CARD*/
+  .task-card-layout{
+    margin: 5px 0;
+    height: 80px;
+  } 
+  .task-card-text-container{
+    margin: auto 0;
+  } 
+  .card-title{
+    margin-top: 0;
+    font-size: 95%;
+  }
+  .card-subtitle{
+    padding: 5px 0;
+    margin-top: 5px;
+    font-size: 70%;
+  }
+  .card-text{
+    font-size: 70%;
+  }
+  .h5{
+    margin-bottom: 2px;
+  } 
+  .delete-button{
+    width: 50px;
+  }
+  .filters{
+    display: block;
+  }
+  .filter{
+    margin-top: 5px;
+  }
+  .manage-account-button{
+    font-size: 80%;
+  }
+  .logout-button{
+    font-size: 80%;
+  }
 }

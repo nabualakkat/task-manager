@@ -12,6 +12,11 @@ const TaskList = () => {
   useEffect(()=> {
     dispatch(fetchTasks(showIncomplete, sortBy, limit, skip))
   },[dispatch, showIncomplete, sortBy, limit, skip, totalTasks])
+  if (tasks.length === 0 && showIncomplete === 'incomplete'){
+    return ( <p className="no-tasks">No Incomplete Tasks</p> )
+  } else if (tasks.length === 0) {
+    return ( <p className="no-tasks"> Add some tasks! </p>)
+  }
   return tasks.map((task) => 
     <Task 
       key={task._id} 
