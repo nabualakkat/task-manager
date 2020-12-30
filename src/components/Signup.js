@@ -46,16 +46,16 @@ const Signup = () => {
       <h1 className="public-header">Task Manager</h1>
       <FormGroup onSubmit={onSubmit}>
         <FormControl className={hasError('name') ? "form-control is-invalid" : "form-control"} type="text" value={name} onChange={onNameChange} placeholder="Name"/>
-        <Feedback type="invalid" className={hasError('email') ? "inline-errormsg" : "hidden"}>
+        <Feedback className={hasError('name') ? "invalid-feedback" : "hidden"}>
           Name required
         </Feedback>
         <FormControl className={hasError('email') ? "form-control is-invalid" : "form-control"} type="email" value={email} onChange={onEmailChange} placeholder="Email"/>
-        <Feedback type="invalid" className={hasError('email') ? "inline-errormsg" : "hidden"}>
+        <Feedback className={hasError('email') ? "invalid-feedback" : "hidden"}>
           Invalid Email
         </Feedback>
         <FormControl className={hasError('password') ? "form-control is-invalid" : "form-control"} type="password" value={password} onChange={onPasswordChange} placeholder="Password"/>
-        <Feedback type="invalid" className={hasError('password') ? "inline-errormsg" : "hidden"}>
-          Password must be at least 7 characters and not include the word 'password'
+        <Feedback className={hasError('password') ? "invalid-feedback" : "hidden"}>
+          Password must be at least 6 characters and cannot include "password"
         </Feedback>
         <Button 
         className="submit-button"
