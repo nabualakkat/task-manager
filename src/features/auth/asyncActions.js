@@ -38,10 +38,10 @@ export function postUser(formData) {
         dispatch(createUserSuccess(data))
         data.token && localStorage.setItem('token', data.token)
       }else{
-        throw new Error()
+        throw new Error( )
       }
     }catch(e){
-      dispatch(createUserFailure('Bad Request'))
+      dispatch(createUserFailure('Unable to create user'))
     }
   }
 }
@@ -59,6 +59,7 @@ export function postLogin(formData) {
       body: JSON.stringify(formData)
     })
     const data = await response.json()
+    console.log(data)
     if (response.status === 200){
       dispatch(loginSuccess(data))
       data.token && localStorage.setItem('token', data.token)
@@ -66,7 +67,7 @@ export function postLogin(formData) {
       throw new Error()
     }
     }catch(e) {
-      dispatch(loginFailure('Login Failed'))
+      dispatch(loginFailure('Unable to login'))
     }
   }
 }
@@ -91,7 +92,7 @@ export function getAuth(){
         dispatch(authenticateFailure())
       }
     }catch (e) {
-      dispatch(authenticateFailure())
+      dispatch(authenticateFailure('Unable to authenticate'))
     }
   }
 }
@@ -117,7 +118,7 @@ export function postLogout() {
       }
 
     }catch (e) {
-      dispatch(logoutFailure())
+      dispatch(logoutFailure('Unable to connect to server. Try again later'))
     }
   }
 }
@@ -142,7 +143,7 @@ export function editProfile(formData) {
         throw new Error()
       }
     }catch (e) {
-      dispatch(updateProfileFailure())
+      dispatch(updateProfileFailure('Unable to update profile'))
     }
   }
 }
@@ -168,7 +169,7 @@ export function removeAccount() {
         throw new Error()
       }
     }catch (e) {
-      dispatch(deleteAccountFailure())
+      dispatch(deleteAccountFailure('Unable to connect to server. Try again later'))
     }
   }
 }

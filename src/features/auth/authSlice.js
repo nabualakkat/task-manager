@@ -44,9 +44,9 @@ const authSlice = createSlice({
       state.loading = false
       state.user = {...state.user, user: payload}
     },
-    authenticateFailure: state => {
+    authenticateFailure: (state, {payload}) => {
       state.loading = false
-
+      state.errorMessage = payload
     },
     logout: state => {
       state.loading = true
@@ -57,10 +57,10 @@ const authSlice = createSlice({
       state.user = null
       state.errorMessage=null
     },
-    logoutFailure: state => {
+    logoutFailure: (state, {payload}) => {
       state.loading = false
       state.isAuth = true
-      state.errorMessage = 'Unable to logout'
+      state.errorMessage = payload
     },
     updateProfile: state => {
       state.loading = true
@@ -70,9 +70,9 @@ const authSlice = createSlice({
       state.loading = false
       state.user = {...state.user, user: payload}
     },
-    updateProfileFailure: state => {
+    updateProfileFailure: (state, {payload}) => {
       state.loading = false
-      state.errorMessage = 'Unable to update profile'
+      state.errorMessage = payload
     },
     deleteAccount: state => {
       state.loading = true
@@ -82,9 +82,9 @@ const authSlice = createSlice({
       state.isAuth = false
       state.user = null
     },
-    deleteAccountFailure: state => {
+    deleteAccountFailure: (state, {payload}) => {
       state.loading = false
-      state.errorMessage = 'unable to delete account'
+      state.errorMessage = payload
     }
   }
 })

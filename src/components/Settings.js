@@ -10,7 +10,7 @@ import Layout from './Layout'
 
 const SettingsPage = (props) => {
   const dispatch = useDispatch()
-  const {user} = useSelector(authSelector)
+  const {user, errorMessage} = useSelector(authSelector)
   const [name, setName] = useState(user.user.name)
   const [email, setEmail] = useState(user.user.email)
   const [password, setPassword] = useState('')

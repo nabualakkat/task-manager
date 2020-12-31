@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { useDispatch} from 'react-redux'
+import { useDispatch, useSelector} from 'react-redux'
 import {FormGroup, FormControl, Button} from 'react-bootstrap'
 import {postLogin} from '../features/auth/asyncActions'
 import { Link } from 'react-router-dom';
@@ -7,6 +7,7 @@ import validator from 'validator'
 import '../App.css'
 import Feedback from 'react-bootstrap/esm/Feedback';
 import Layout from './Layout'
+import { authSelector } from '../features/auth/authSlice';
 
 
 const Login = () => {
@@ -15,6 +16,7 @@ const Login = () => {
   const [password, setPassword] = useState('')
   const [errors, setErrors] = useState([])
   const dispatch = useDispatch()
+  const {errorMessage} = useSelector(authSelector)
   //Handlers
   const onEmailChange = (e) => setEmail(e.target.value)
   const onPasswordChange = (e) => setPassword(e.target.value)
@@ -49,6 +51,7 @@ const Login = () => {
         <Feedback className={hasError('password') ? "invalid-feedback" : "hidden"}>
           {password.toLowerCase().includes('password') ? "Cannot include the word 'password'" : "Password must be at least 7 characters"}
         </Feedback>
+
         <Button
           className="submit-button" 
           onClick={onSubmit}
@@ -58,7 +61,7 @@ const Login = () => {
           Login
         </Button>
       </FormGroup>
-      <Link className="link" to="/signup">Sign up</Link>
+      <Link className="link" to="/signup">Don't have an account?</Link>
     </div>
     </Layout>
   );

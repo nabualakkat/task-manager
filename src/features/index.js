@@ -5,7 +5,7 @@ import taskReducer from './task/taskSlice'
 
 export const token = () => ('Bearer ' + window.localStorage.getItem('token'))
 
-export const baseUrl = 'https://alakkat-task-manager.herokuapp.com'
+export const baseUrl = process.env.BASE_URL
 
 
 const rootReducer = combineReducers({
