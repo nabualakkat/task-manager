@@ -3,9 +3,11 @@ import {useDispatch, useSelector} from 'react-redux'
 import {Form, Button} from 'react-bootstrap'
 import Feedback from 'react-bootstrap/esm/Feedback'
 import validator from 'validator'
+import {Link} from 'react-router-dom'
 import {editProfile, removeAccount} from '../features/auth/asyncActions'
 import {authSelector} from '../features/auth/authSlice'
 import Layout from './Layout'
+import BackArrow from '../assets/BackArrow'
 
 
 const SettingsPage = (props) => {
@@ -51,6 +53,11 @@ const SettingsPage = (props) => {
   return(
     <Layout>
     <div className="form-signin">
+      <div className="settings-header">
+        <Link to="/tasks" className='back-button'>
+          <BackArrow/>
+        </Link>
+      </div>
       <h1 className="public-header">Manage Account</h1>
       <Form.Group>
         <Form.Control 
@@ -88,7 +95,7 @@ const SettingsPage = (props) => {
         </Button>
       </Form.Group>
       <Form.Group onSubmit={onDelete}>
-        <Button className="submit-button" onClick={onDelete}>Delete Account</Button>
+        <Button className="submit-button delete-account-button" onClick={onDelete}>Delete Account</Button>
       </Form.Group>          
     </div>
     </Layout>

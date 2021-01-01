@@ -26,36 +26,36 @@ const App = () => {
   return(
   <>
 
-      <Router>
-        <Switch>
-          <PublicRoute 
-            exact
-            isAuth={isAuth} 
-            path="/"
-            component={Login}/>
-          <PublicRoute 
-            exact
-            isAuth={isAuth} 
-            path="/signup"
-            component={Signup}/>
-          <PrivateRoute 
-            exact
-            isAuth={isAuth} 
-            path="/tasks"
-            component={TasksPage}/>
-          <PrivateRoute 
-            exact
-            isAuth={isAuth} 
-            path="/add-task"
-            component={TaskForm}/>
-          <PrivateRoute 
-            exact
-            isAuth={isAuth} 
-            path="/manage-account"
-            component={SettingsPage}/>
-          <Route path="*" component={NotFoundPage}/>
-        </Switch>
-      </Router>
+    <Router>
+      <Switch>
+        <PublicRoute 
+          exact
+          isAuth={isAuth} 
+          path="/"
+          component={Login}/>
+        <PublicRoute 
+          exact
+          isAuth={isAuth} 
+          path="/signup"
+          component={Signup}/>
+        <PrivateRoute 
+          exact
+          isAuth={isAuth} 
+          path="/tasks"
+          component={TasksPage}/>
+        <PrivateRoute 
+          exact
+          isAuth={isAuth} 
+          path="/add-task"
+          component={TaskForm}/>
+        <PrivateRoute 
+          exact
+          isAuth={isAuth} 
+          path="/manage-account"
+          component={SettingsPage}/>
+        <Route path="*" component={NotFoundPage}/>
+      </Switch>
+    </Router>
 
   </>
   )

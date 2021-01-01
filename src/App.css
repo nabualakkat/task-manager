@@ -32,6 +32,13 @@ body {
   font-size: 200%;
 }
 
+.settings-header{
+  width: 100%;
+  text-align: left;
+  padding-left: 5%;
+  padding-bottom: 20px;
+}
+
 .task-form{
   margin: auto;
 }
@@ -63,6 +70,14 @@ body {
   background: none;
   color: #FF9800;
   border-color: #FF9800;
+}
+
+.delete-account-button{
+  margin: 0;
+  background-color: #455A64;
+}
+.delete-account-button:hover{
+  background-color: #455A64;
 }
 
 .logout-button{
@@ -103,6 +118,20 @@ body {
 }
 
 
+.back-button{
+  text-decoration: none;
+  color: #455A64;
+
+}
+.back-button:hover{
+  text-decoration: none;
+  color: #455A64;
+  background-color: #FF9800;
+}
+
+.bi-arrow-left-square-fill:hover{
+  border: 1px solid #FF9800;
+}
 
 /*NAVS & HEADERS*/
 .main-nav,
